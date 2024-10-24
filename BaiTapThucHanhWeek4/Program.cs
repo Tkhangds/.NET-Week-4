@@ -1,3 +1,7 @@
+using BaiTapThucHanhWeek4.Models;
+using BaiTapThucHanhWeek4.Repository;
+using Microsoft.EntityFrameworkCore;
+
 namespace BaiTapThucHanhWeek4
 {
     public class Program
@@ -8,6 +12,12 @@ namespace BaiTapThucHanhWeek4
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            var connectionString = builder.Configuration.GetConnectionString("QlbanVaLiContext");
+            builder.Services.AddDbContext<QlbanVaLiContext>(options => options.UseSqlServer(connectionString));
+
+            builder.Services.AddScoped<ILoaiSpRepository, LoaiSpRepository>();
+            builder.Services.AddSession();
 
             var app = builder.Build();
 

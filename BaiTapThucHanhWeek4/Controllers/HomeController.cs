@@ -32,6 +32,16 @@ namespace BaiTapThucHanhWeek4.Controllers
             return View();
         }
 
+        public IActionResult SanPhamTheoLoai(String maLoai, int? page)
+        {
+            int pageSize = 8;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstsanpham = db.TDanhMucSps.AsNoTracking().Where(x => x.MaLoai == maLoai).OrderBy(x => x.TenSp);
+            PagedList<TDanhMucSp> lst = new PagedList<TDanhMucSp>(lstsanpham, pageNumber, pageSize);
+            ViewBag.maLoai = maLoai;
+            return View(lst);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
