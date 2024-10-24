@@ -1,4 +1,5 @@
 ﻿using BaiTapThucHanhWeek4.Models;
+using BaiTapThucHanhWeek4.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -48,6 +49,18 @@ namespace BaiTapThucHanhWeek4.Controllers
             var anhSanPham = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
             ViewBag.anhSanPham = anhSanPham;
             return View(sanpham);
+        }
+
+        public IActionResult ProductDetail(String maSp)
+        {
+            var sanpham = db.TDanhMucSps.SingleOrDefault(x => x.MaSp == maSp);
+            var anhSanPham = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
+            var homeProductDetailViewModel = new HomeProductDetailViewModel
+            {
+                danhMucSp = sanpham,
+                anhSps = anhSanPham
+            };
+            return View(homeProductDetailViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
