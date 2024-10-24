@@ -42,6 +42,14 @@ namespace BaiTapThucHanhWeek4.Controllers
             return View(lst);
         }
 
+        public IActionResult ChiTietSanPham(String maSp)
+        {
+            var sanpham = db.TDanhMucSps.SingleOrDefault(x => x.MaSp == maSp);
+            var anhSanPham = db.TAnhSps.Where(x => x.MaSp == maSp).ToList();
+            ViewBag.anhSanPham = anhSanPham;
+            return View(sanpham);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
