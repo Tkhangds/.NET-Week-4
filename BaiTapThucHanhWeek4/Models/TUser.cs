@@ -9,9 +9,17 @@ public partial class TUser
 
     public string Password { get; set; } = null!;
 
-    public byte? LoaiUser { get; set; }
+    //public LoaiUser LoaiUser { get; set; }
+
+    public byte loaiuser { get; set; }
 
     public virtual ICollection<TKhachHang> TKhachHangs { get; } = new List<TKhachHang>();
 
     public virtual ICollection<TNhanVien> TNhanViens { get; } = new List<TNhanVien>();
 }
+
+//public enum LoaiUser
+//{
+//    NHANVIEN,
+//    KHACHHANG
+//}

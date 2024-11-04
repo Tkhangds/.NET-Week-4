@@ -1,5 +1,7 @@
 using BaiTapThucHanhWeek4.Models;
 using BaiTapThucHanhWeek4.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaiTapThucHanhWeek4
@@ -19,6 +21,16 @@ namespace BaiTapThucHanhWeek4
             builder.Services.AddScoped<ILoaiSpRepository, LoaiSpRepository>();
             builder.Services.AddSession();
 
+
+            //// Identity Platform
+            //builder.Services.AddIdentityCore<TUser>();
+            //builder.Services.AddAuthentication().AddCookie("MyAuth", options => {
+            //    options.Cookie.Name = "access_token";
+            //    options.Cookie.SameSite = SameSiteMode.Strict;
+            //    options.Cookie.HttpOnly = true;
+            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(90);
+            //});
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -34,11 +46,13 @@ namespace BaiTapThucHanhWeek4
 
             app.UseRouting();
 
+            //app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Access}/{action=Login}/{id?}");
 
             app.Run();
         }

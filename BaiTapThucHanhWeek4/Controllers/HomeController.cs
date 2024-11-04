@@ -1,4 +1,5 @@
 ﻿using BaiTapThucHanhWeek4.Models;
+using BaiTapThucHanhWeek4.Models.Authentication;
 using BaiTapThucHanhWeek4.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace BaiTapThucHanhWeek4.Controllers
             _logger = logger;
         }
 
+        [Authentication]
         public IActionResult Index(int? page)
         {
             int pageSize = 8;
@@ -28,11 +30,13 @@ namespace BaiTapThucHanhWeek4.Controllers
             return View(lst);
         }
 
+        
         public IActionResult Privacy()
         {
             return View();
         }
 
+        [Authentication]
         public IActionResult SanPhamTheoLoai(String maLoai, int? page)
         {
             int pageSize = 8;
