@@ -9,11 +9,49 @@
         <ul>
             @foreach(var item in Model)
             {
-                <li>
+				var getUrl = "https://localhost:7092/api/productapi/" + item.MaLoai;
+			<li><a style="cursor:pointer" onclick="showProductByCategory('@getUrl')">@item.Loai</a></li>
+
+                @* <li>
                     <a asp-controller="Home" asp-action="SanPhamTheoLoai"
                        asp-route-maloai="@item.MaLoai">@item.Loai</a>
-                </li>
+                </li> *@
             }
         </ul>
     </div>
 </div>
+
+<script>
+	function showProductByCategory(getUrl) {
+		var str = "";
+		$.ajax({
+			type: "GET",
+			url: getUrl,
+			dataType: "json",
+			success: function (data) {
+				$.each(data, function (index, val) {
+					str += '<div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">';
+					str += '<div class="featured__item">';
+					str += '<div class="featured__item__pic set-bg" data-setbg="/Images/' + val.anhDaiDien + '"' +
+						'style="background-image: url(/Images/' + val.anhDaiDien + ');">';
+					str += '<ul class="featured__item__pic__hover">';
+					str += '<li><a href="#"><i class="fa fa-heart"></i></a></li>';
+					str += '<li><a href="#"><i class="fa fa-retweet"></i></a></li>';
+					str += '<li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>';
+					str += '</ul>';
+					str += '</div>';
+					str += '<div class="featured__item__text">';
+					str += '<h6><a href="/Home/ProductDetail/' + val.maSp + '">' + val.tenSp + '</a></h6>';
+					str += '<h5>' + val.giaNhoNhat + '</h5>';
+					str += '</div>';
+					str += '</div>';
+					str += '</div>';
+				});
+				$("#displayProducts").html(str);
+			},
+			error: function (xhr) {
+				alert(xhr.responseText);
+			}
+		});
+	}
+</script>
